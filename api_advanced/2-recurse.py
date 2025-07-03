@@ -7,6 +7,8 @@ Modules:
 import requests
 
 """This  function retrieve data from api"""
+
+
 def recurse(subreddit, hot_list=None, after=None):
     """Get data from api."""
     if hot_list is None:
