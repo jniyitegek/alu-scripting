@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" the library to get data from api"""
+"""The library to get data from api."""
 import requests
 
 """ Function to gather data from an API """
