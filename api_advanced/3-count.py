@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """
-This module provides
-of hot posts from a given subreddit using the Reddit API.
+This module provides of hot posts from a given subreddit using the Reddit API.
 
 Modules:
     requests: For making HTTP requests to the Reddit API.
@@ -13,6 +12,7 @@ import re
 
 
 def count_words(subreddit, word_list, after=None, counts=None):
+    """Count words."""
     if counts is None:
 
         counts = {}

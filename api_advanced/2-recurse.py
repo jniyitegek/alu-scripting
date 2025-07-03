@@ -1,14 +1,14 @@
 #!/usr/bin/python3
-"""
-This  retrieve posts from a given subreddit using Reddit's public API.
+"""This  retrieve posts from a given subreddit using Reddit's public API.
 
 Modules:
     requests: Allows sending HTTP requests to interact with the Reddit API.
 """
 import requests
 
-
+"""This  function retrieve data from api"""
 def recurse(subreddit, hot_list=None, after=None):
+    """Get data from api."""
     if hot_list is None:
         hot_list = []
     url = f"https://www.reddit.com/r/{subreddit}/hot.json"
