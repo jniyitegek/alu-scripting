@@ -1,15 +1,18 @@
 #!/usr/bin/python3
-"""
-This module provides a function to retrieve the number of subscribers for a given subreddit.
-
-using the Reddit public API.
-"""
-"""The library to get data from api."""
+"""This module provides using the Reddit public API."""
 import requests
 
-""" Function to gather data from an API """
+
 def number_of_subscribers(subreddit):
-    """Return the number of subscribers for a given subreddit."""
+    """
+    Return the number of subscribers for a given subreddit.
+    
+    Args:
+        subreddit (str): The name of the subreddit (without 'r/' prefix).
+        
+    Returns:
+        int: Number of subscribers, or 0 if subreddit doesn't exist or an error occurs.
+    """
     url = f"https://www.reddit.com/r/{subreddit}/about.json"
     headers = {'User-Agent': 'Python:subscribers:v1.0 (by /u/yourusername)'}
     try:
