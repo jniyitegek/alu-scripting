@@ -1,12 +1,6 @@
 #!/usr/bin/python3
-"""
-This module prints the first 10 hot posts for a given subreddit using Reddit API.
-
-Modules:
-    requests: Used to make HTTP requests to the Reddit API.
-"""
+"""Print the titles of the first 10 hot posts for a given subreddit."""
 import requests
-
 
 def top_ten(subreddit):
     """Print the titles of the first 10 hot posts for a given subreddit."""
