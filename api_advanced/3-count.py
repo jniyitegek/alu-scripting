@@ -49,4 +49,3 @@ def count_words(subreddit, word_list, after='', hot_list=[]):
                     print("{}: {}".format(word_list[i].lower(), hot_list[i]))
         else:
             count_words(subreddit, word_list, after, hot_list)
-            
