@@ -11,12 +11,15 @@ def top_ten(subreddit):
         print(None)
         return
     
-    headers = {'User-Agent': 'MyAPI/0.0.1'}
-    subreddit_url = "https://www.reddit.com/r/{}.json".format(subreddit)
+    headers = {
+        'User-Agent': 'python:MyAPI:v1.0.0 (by /u/testuser)',
+        'Accept': 'application/json'
+    }
+    subreddit_url = "https://www.reddit.com/r/{}/hot.json".format(subreddit)
     
     try:
         # Prevent redirects to ensure we're not getting search results
-        response = requests.get(subreddit_url, headers=headers, allow_redirects=False)
+        response = requests.get(subreddit_url, headers=headers, allow_redirects=False, timeout=10)
         
         # Check if the request was successful and not redirected
         if response.status_code == 200:
@@ -30,11 +33,17 @@ def top_ten(subreddit):
                 children = json_data.get('data').get('children')
                 
                 # Print up to 10 post titles (or fewer if less than 10 posts exist)
+                posts_printed = 0
                 for i in range(min(10, len(children))):
                     post_data = children[i].get('data', {})
                     title = post_data.get('title')
                     if title:
                         print(title)
+                        posts_printed += 1
+                
+                # If no posts were printed, print None
+                if posts_printed == 0:
+                    print(None)
             else:
                 print(None)
         else:
