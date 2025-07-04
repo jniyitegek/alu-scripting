@@ -5,7 +5,9 @@ import requests
 
 
 def top_ten(subreddit):
-    
+    """Return number of subscribers if @subreddit is valid subreddit.
+if not return 0."""
+
     url = f"https://www.reddit.com/r/{subreddit}/hot.json"
     headers = {
         "User-Agent": "MyRedditApp/1.0"
