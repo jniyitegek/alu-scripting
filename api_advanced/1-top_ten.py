@@ -12,10 +12,9 @@ def top_ten(subreddit):
         return
     
     headers = {
-        'User-Agent': 'python:MyAPI:v1.0.0 (by /u/testuser)',
-        'Accept': 'application/json'
+        'User-Agent': 'python:reddit-scraper:v1.0.0 (by /u/testuser)'
     }
-    subreddit_url = "https://www.reddit.com/r/{}/hot.json".format(subreddit)
+    subreddit_url = "https://old.reddit.com/r/{}.json".format(subreddit)
     
     try:
         # Prevent redirects to ensure we're not getting search results
@@ -23,33 +22,39 @@ def top_ten(subreddit):
         
         # Check if the request was successful and not redirected
         if response.status_code == 200:
-            json_data = response.json()
-            
-            # Verify we have the expected JSON structure
-            if (json_data.get('data') and 
-                json_data.get('data').get('children') and
-                isinstance(json_data.get('data').get('children'), list)):
+            try:
+                json_data = response.json()
                 
-                children = json_data.get('data').get('children')
-                
-                # Print up to 10 post titles (or fewer if less than 10 posts exist)
-                posts_printed = 0
-                for i in range(min(10, len(children))):
-                    post_data = children[i].get('data', {})
-                    title = post_data.get('title')
-                    if title:
-                        print(title)
-                        posts_printed += 1
-                
-                # If no posts were printed, print None
-                if posts_printed == 0:
+                # Verify we have the expected JSON structure
+                if (json_data and 
+                    'data' in json_data and 
+                    'children' in json_data['data'] and
+                    isinstance(json_data['data']['children'], list)):
+                    
+                    children = json_data['data']['children']
+                    
+                    # Print up to 10 post titles (or fewer if less than 10 posts exist)
+                    count = 0
+                    for i in range(min(10, len(children))):
+                        if 'data' in children[i] and 'title' in children[i]['data']:
+                            title = children[i]['data']['title']
+                            if title:  # Only print non-empty titles
+                                print(title)
+                                count += 1
+                    
+                    # If we didn't print any titles, it's an invalid subreddit
+                    if count == 0:
+                        print(None)
+                        
+                else:
                     print(None)
-            else:
+                    
+            except (ValueError, KeyError, TypeError):
                 print(None)
         else:
             # Any non-200 status code (including redirects) means invalid subreddit
             print(None)
             
-    except (requests.RequestException, ValueError, KeyError, AttributeError):
-        # Handle network errors, JSON parsing errors, or missing keys
+    except requests.RequestException:
+        # Handle network errors
         print(None)
