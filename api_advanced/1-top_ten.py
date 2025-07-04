@@ -8,19 +8,17 @@ def top_ten(subreddit):
     if not return 0."""
 
     headers = {
-    'User-Agent': 'python:alx_topten:v1.0 (by JeanPhilippe2025)'
-}
+        'User-Agent': 'python:alx_topten:v1.0 (by JeanPhilippe2025)'
+    }
     subreddit_url = "https://www.reddit.com/r/{}/hot.json".format(subreddit)
-    response = requests.get(subreddit_url, headers=headers)
+    response = requests.get(subreddit_url, headers=headers, allow_redirects=False)
 
     if response.status_code == 200:
         json_data = response.json()
-        for i in range(10):
-            print(
-                json_data.get('data')
-                .get('children')[i]
-                .get('data')
-                .get('title')
-            )
+        posts = json_data.get('data', {}).get('children', [])
+
+        for i in range(min(10, len(posts))):
+            print(posts[i].get('data', {}).get('title'))
     else:
         print(None)
+
