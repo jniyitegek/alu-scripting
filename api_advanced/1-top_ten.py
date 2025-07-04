@@ -10,7 +10,7 @@ def top_ten(subreddit):
     headers = {
     'User-Agent': 'python:alx_topten:v1.0 (by JeanPhilippe2025)'
 }
-    subreddit_url = "https://reddit.com/r/{}.json".format(subreddit)
+    subreddit_url = "https://www.reddit.com/r/{}/hot.json".format(subreddit)
     response = requests.get(subreddit_url, headers=headers)
 
     if response.status_code == 200:
